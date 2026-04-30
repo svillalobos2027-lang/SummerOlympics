@@ -45,6 +45,15 @@ struct ContentView: View {
         }
         .padding()
     }
+    
+    func getImageName(logoName: String) -> String {
+        // 3 extensions: .png, .jpg, and .jpeg
+        var newLogoName = logoName.replacingOccurrences(of: ".png", with: "")
+        newLogoName = newLogoName.replacingOccurrences(of: ".jpg", with: "")
+       return newLogoName.replacingOccurrences(of: ".jpeg", with: "")
+
+    }
+
 }
 
 #Preview {
