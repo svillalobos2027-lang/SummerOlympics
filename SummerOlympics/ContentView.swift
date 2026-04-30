@@ -53,6 +53,8 @@ struct ContentView: View {
        return newLogoName.replacingOccurrences(of: ".jpeg", with: "")
 
     }
+  
+
 
 }
 
