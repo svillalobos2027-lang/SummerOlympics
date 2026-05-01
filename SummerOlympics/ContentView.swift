@@ -38,21 +38,90 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+            Text("Olympics Logos")
+                .font(.largeTitle)
+                .fontWeight(.black)
+            
+            Spacer()
+            
+            Image(getImageName(logoName: logos[logoNumber]))
+                .resizable()
+                .scaledToFit()
+            
+            Spacer()
+            
+            VStack {
+                Text ("\(getCity(logoName: logos[logoNumber])), \(getCountry(logoName: logos[logoNumber])) ")
+                Text(getYear(logoName: logos[logoNumber]))
+            }
+            .font(.largeTitle)
+            .fontWeight(.thin)
+            
+            HStack {
+                Button {
+                    logoNumber = logoNumber - 1
+                } label: {
+                    Image(systemName: "chevron.left.to.line")
+                }
+                .disabled(logoNumber == 0)
+
+                
+                Spacer()
+                
+                Button {
+                    logoNumber += 1
+                } label: {
+                    Image(systemName: "chevron.right.to.line")
+                }
+                .disabled(logoNumber == logos.count-1)
+                
+            }
+            .font(.largeTitle)
+            .fontWeight(.black)
+            .tint(.black)
+
         }
         .padding()
     }
     
-    func getImageName(logoName: String) -> String {
+    private func getImageName(logoName: String) -> String {
         // 3 extensions: .png, .jpg, and .jpeg
         var newLogoName = logoName.replacingOccurrences(of: ".png", with: "")
         newLogoName = newLogoName.replacingOccurrences(of: ".jpg", with: "")
        return newLogoName.replacingOccurrences(of: ".jpeg", with: "")
 
     }
+    func getYear(logoName: String) -> String {
+        var componentsArray = logoName .components(separatedBy: "-")
+        return componentsArray[0]
+    }
+    
+    func getCountry(logoName: String) -> String {
+        var componentsArray = logoName.components(separatedBy: "-")
+        var country = componentsArray.last ?? ""
+        country = getImageName(logoName: country)
+        if country.lowercased() == "usa" {
+            country = country.uppercased()
+        } else {
+            country = country.capitalized
+        }
+        return country
+    }
+    
+    func getCity(logoName : String) -> String {
+        var componentsArray = logoName.components(separatedBy: "-")
+        componentsArray.removeFirst()
+        componentsArray.removeLast()
+        var city = ""
+        for component in componentsArray {
+            city = city + component + " "
+        }
+    // Remove space at the end of city
+        city.removeLast()
+        return city.capitalized
+    }
+
   
 
 
